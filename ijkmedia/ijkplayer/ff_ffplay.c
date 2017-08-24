@@ -1317,6 +1317,26 @@ static int queue_picture(FFPlayer *ffp, AVFrame *src_frame, double pts, double d
         // sws_getCachedContext(...);
 #endif
 #endif
+    /*
+        AVPicture pict;
+        pict.data[0] = vp->bmp->pixels[0];
+        pict.data[1] = vp->bmp->pixels[2];
+        pict.data[2] = vp->bmp->pixels[1];
+
+        pict.linesize[0] = vp->bmp->pitches[0];
+        pict.linesize[1] = vp->bmp->pitches[2];
+        pict.linesize[2] = vp->bmp->pitches[1];
+
+        // Convert the image into YUV format that SDL uses
+        //sws_scale(sws_ctx, (uint8_t const * const *)pFrame->data,
+        //    pFrame->linesize, 0, pCodecCtx->height,
+        //    pict.data, pict.linesize);
+        dewarp_view_process(hanlde, src, dst);
+        for (int i = 0; i < AV_NUM_DATA_POINTERS; ++i) {
+            overlay->pixels[i] = frame->data[i];
+            overlay->pitches[i] = frame->linesize[i];
+        }
+    */
         // FIXME: set swscale options
         if (SDL_VoutFillFrameYUVOverlay(vp->bmp, src_frame) < 0) {
             av_log(NULL, AV_LOG_FATAL, "Cannot initialize the conversion context\n");
